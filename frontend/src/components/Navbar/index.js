@@ -1,11 +1,15 @@
 import React from 'react';
 import logo from '../../assets/img/avatars/avatar5.jpeg'
+import logoTec from '../../assets/img/logo.png';
 
 const Navbar = (props) => {
     return (
             <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                 <div className="container">
                     <ul className="nav navbar-nav flex-nowrap ml-auto">
+                        <li style={{marginRight: '450px', paddingTop: '20px'}}>
+                            <img src={logoTec} style={{height: '40px'}} alt="Tec"/>
+                        </li>
                         <li className="nav-item dropdown no-arrow">
                             <div className="nav-item dropdown no-arrow pt-2">
                                 <a className="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="/">

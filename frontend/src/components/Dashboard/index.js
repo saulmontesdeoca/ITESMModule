@@ -1,13 +1,149 @@
-import React from 'react';
+import React, { useState } from "react";
+import { KeyboardDatePicker,   KeyboardTimePicker } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import { makeStyles } from '@material-ui/core/styles';
+
+import DateFnsUtils from '@date-io/date-fns';
+import Grid from '@material-ui/core/Grid';
+
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+  }));
 
 const Dashboard = () => {
+    const [date, setDate] = useState(new Date());
+    const [initialHour, setInitialHour] = useState(new Date());
+    const [finalHour, setFinalHour] = useState(new Date());
+    const [classroom, setClassroom] = React.useState('');
+    const classes = useStyles();
+
+
+    const handleClassroomChange = (event) => {
+        setClassroom(event.target.value);
+    };
+
+
+    const handleDateChange = (date) => {
+        setDate(date);
+    };
+    const handleInitialHourChange = (hour) => {
+        setInitialHour(hour);
+      };
+    const handleFinalHourChange = (hour) => {
+        setFinalHour(hour);
+    };
+
     return (
             <div className="container-fluid">
                 <div className="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 className="text-dark mb-0">Dashboard</h3>
+                    <h3 className="text-dark mb-0">Classroom booking</h3>
                 </div>
-                <div className="row">
-                    <div className="col-lg-6 mb-4">
+                <div className="row justify-content-around">
+                    <div className="col-lg-8 col-sm-12 mb-4">
+                        <div className="card shadow mb-4">
+                            <div className="card-header py-3">
+                                <h6 className="text-primary font-weight-bold m-0">Book</h6>
+                            </div>
+                            <div className="card-body" style={{maxHeight: '355px', overflowY: 'auto'}}>
+                                <form>
+                                    <div className="row">
+                                        <div class="form-group col">
+                                            <label>Classroom:</label>
+                                            <br/>
+                                            <FormControl  className={classes.formControl}>
+                                                <InputLabel id="demo-simple-select-label">Classroom</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={classroom}
+                                                    onChange={handleClassroomChange}
+                                                    >
+                                                    <MenuItem value={10}>A1001</MenuItem>
+                                                    <MenuItem value={20}>A2002</MenuItem>
+                                                    <MenuItem value={30}>A3003</MenuItem>
+                                                    <MenuItem value={30}>A4004</MenuItem>
+                                                    <MenuItem value={30}>A5005</MenuItem>
+
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label>Use:</label>
+                                            <input type="text" class="form-control mt-2" placeholder="Uso" />
+                                        </div>
+                                    </div>
+                                    <div className="row mt-3">
+                                        <div class="form-group col">
+                                            <label>Date:</label>
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <Grid container justify="space-around">
+                                                    <KeyboardDatePicker
+                                                        margin="normal"
+                                                        id="date-picker-dialog"
+                                                        label="Date"
+                                                        format="MM/dd/yyyy"
+                                                        value={date}
+                                                        onChange={handleDateChange}
+                                                        KeyboardButtonProps={{
+                                                            'aria-label': 'change date',
+                                                        }}
+                                                        />
+                                                    </Grid>                                     
+                                            </MuiPickersUtilsProvider>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label>Start time:</label>
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <Grid container justify="space-around">
+                                                    <KeyboardTimePicker
+                                                        margin="normal"
+                                                        id="time-picker"
+                                                        label="Start time"
+                                                        minutesStep={5}
+                                                        value={initialHour}
+                                                        onChange={handleInitialHourChange}
+                                                        KeyboardButtonProps={{
+                                                            'aria-label': 'change time',
+                                                        }}
+                                                        />
+                                                    </Grid>                                     
+                                            </MuiPickersUtilsProvider>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label>End time:</label>
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <Grid container justify="space-around">
+                                                    <KeyboardTimePicker
+                                                        margin="normal"
+                                                        id="time-picker"
+                                                        label="End time"
+                                                        minutesStep={5}
+                                                        value={finalHour}
+                                                        onChange={handleFinalHourChange}
+                                                        KeyboardButtonProps={{
+                                                            'aria-label': 'change time',
+                                                        }}
+                                                        />
+                                                    </Grid>                                     
+                                            </MuiPickersUtilsProvider>                                       
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-lg btn-block mt-3">Book now</button>
+                                </form>
+                            </div>
+                        </div>            
+                    </div>
+                </div>
+                <div className="row justify-content-around">
+                    <div className="col-lg-8 col-sm-12 mb-4">
                         <div className="card shadow mb-4">
                             <div className="card-header py-3">
                                 <h6 className="text-primary font-weight-bold m-0">Departamentos</h6>
@@ -35,58 +171,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>            
-                    </div>
-                    <div className="col">
-                        <div className="row">
-                            <div className="col-lg-6 mb-4">
-                                <div className="card text-white bg-primary shadow">
-                                    <div className="card-body">
-                                        <p className="m-0">Primary</p>
-                                        <p className="text-white-50 small m-0">#4e73df</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-6 mb-4">
-                                <div className="card text-white bg-success shadow">
-                                    <div className="card-body">
-                                        <p className="m-0">Success</p>
-                                        <p className="text-white-50 small m-0">#1cc88a</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-6 mb-4">
-                                <div className="card text-white bg-info shadow">
-                                    <div className="card-body">
-                                        <p className="m-0">Info</p>
-                                        <p className="text-white-50 small m-0">#36b9cc</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-6 mb-4">
-                                <div className="card text-white bg-warning shadow">
-                                    <div className="card-body">
-                                        <p className="m-0">Warning</p>
-                                        <p className="text-white-50 small m-0">#f6c23e</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-6 mb-4">
-                                <div className="card text-white bg-danger shadow">
-                                    <div className="card-body">
-                                        <p className="m-0">Danger</p>
-                                        <p className="text-white-50 small m-0">#e74a3b</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-6 mb-4">
-                                <div className="card text-white bg-secondary shadow">
-                                    <div className="card-body">
-                                        <p className="m-0">Secondary</p>
-                                        <p className="text-white-50 small m-0">#858796</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
