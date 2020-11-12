@@ -1,9 +1,8 @@
 import React from 'react';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/Navbar';
-import Dashboard from '../../components/Dashboard';
 
-function Home(props) {
+const Reservaciones = (props) => {
     return (
         <div id="wrapper">
             <Sidebar/>
@@ -11,13 +10,14 @@ function Home(props) {
                 <div id="content">
                     <div className="container-fluid p-0">
                         <Navbar />
-                        <Dashboard />
+                        
+                        <h1>Reservaciones</h1>
                     </div>
 
                 </div>
             </div>
         </div>
     );
-}
+};
 
-export default Home;
+export default Reservaciones;
