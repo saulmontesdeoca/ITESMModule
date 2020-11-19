@@ -10,6 +10,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import Grid from '@material-ui/core/Grid';
 
+import 'firebase/firestore';
+import {firebaseApp} from '../../pages/Login'
+
+const db = firebaseApp.firestore();
+const user = firebaseApp.auth().currentUser;
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -18,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const Dashboard = () => {
+const Dashboard = (props) => {
     const [date, setDate] = useState(new Date());
+    const [use, setUse] = useState('');
     const [initialHour, setInitialHour] = useState(new Date());
     const [finalHour, setFinalHour] = useState(new Date());
     const [classroom, setClassroom] = React.useState('');
@@ -29,7 +35,9 @@ const Dashboard = () => {
     const handleClassroomChange = (event) => {
         setClassroom(event.target.value);
     };
-
+    const handleUse = (event) => {
+        setUse(event.target.value);
+    };
 
     const handleDateChange = (date) => {
         setDate(date);
@@ -40,6 +48,33 @@ const Dashboard = () => {
     const handleFinalHourChange = (hour) => {
         setFinalHour(hour);
     };
+
+    const  handleSubmit = async (event) => {
+        // console.log('====================================');
+        // console.log('Classroom: ' + classroom);
+        // console.log('Use: ' + use);
+        // console.log('Date: ' + date);
+        // console.log('Initial hour: ' + initialHour);
+        // console.log('Final hour: ' + finalHour);
+        // console.log('====================================');
+        event.preventDefault();
+
+        await db.collection('bookings').add({
+            classrooms: classroom,
+            date: date,
+            initialHour: initialHour,
+            finalHour: finalHour,
+            userId: user.uid,
+        })
+        .then(docRef => {
+            alert("Booked successfully!");
+            window.location.href = "reservaciones";
+        })
+        .catch(error => {
+            console.log("Error adding document: " + error);
+
+        });
+    }
 
     return (
             <div className="container-fluid">
@@ -53,12 +88,12 @@ const Dashboard = () => {
                                 <h6 className="text-primary font-weight-bold m-0">Book</h6>
                             </div>
                             <div className="card-body" style={{maxHeight: '355px', overflowY: 'auto'}}>
-                                <form>
+                                <form onSubmit={handleSubmit}>
                                     <div className="row">
-                                        <div class="form-group col">
+                                        <div className="form-group col">
                                             <label>Classroom:</label>
                                             <br/>
-                                            <FormControl  className={classes.formControl}>
+                                            <div  className={classes.formControl}>
                                                 <InputLabel id="demo-simple-select-label">Classroom</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
@@ -66,22 +101,22 @@ const Dashboard = () => {
                                                     value={classroom}
                                                     onChange={handleClassroomChange}
                                                     >
-                                                    <MenuItem value={10}>A1001</MenuItem>
-                                                    <MenuItem value={20}>A2002</MenuItem>
-                                                    <MenuItem value={30}>A3003</MenuItem>
-                                                    <MenuItem value={30}>A4004</MenuItem>
-                                                    <MenuItem value={30}>A5005</MenuItem>
+                                                    <MenuItem value='A1001'>A1001</MenuItem>
+                                                    <MenuItem value='A2002'>A2002</MenuItem>
+                                                    <MenuItem value='A3003'>A3003</MenuItem>
+                                                    <MenuItem value='A4004'>A4004</MenuItem>
+                                                    <MenuItem value='A5005'>A5005</MenuItem>
 
                                                 </Select>
-                                            </FormControl>
+                                            </div>
                                         </div>
-                                        <div class="form-group col">
+                                        <div className="form-group col">
                                             <label>Use:</label>
-                                            <input type="text" class="form-control mt-2" placeholder="Uso" />
+                                            <input type="text" value={use} className="form-control mt-2" placeholder="Uso" onChange={handleUse}/>
                                         </div>
                                     </div>
                                     <div className="row mt-3">
-                                        <div class="form-group col">
+                                        <div className="form-group col">
                                             <label>Date:</label>
                                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                 <Grid container justify="space-around">
@@ -99,7 +134,7 @@ const Dashboard = () => {
                                                     </Grid>                                     
                                             </MuiPickersUtilsProvider>
                                         </div>
-                                        <div class="form-group col">
+                                        <div className="form-group col">
                                             <label>Start time:</label>
                                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                 <Grid container justify="space-around">
@@ -117,7 +152,7 @@ const Dashboard = () => {
                                                     </Grid>                                     
                                             </MuiPickersUtilsProvider>
                                         </div>
-                                        <div class="form-group col">
+                                        <div className="form-group col">
                                             <label>End time:</label>
                                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                 <Grid container justify="space-around">
@@ -136,7 +171,7 @@ const Dashboard = () => {
                                             </MuiPickersUtilsProvider>                                       
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-lg btn-block mt-3">Book now</button>
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block mt-3">Book now</button>
                                 </form>
                             </div>
                         </div>            

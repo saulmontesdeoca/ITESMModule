@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import withFirebaseAuth from 'react-with-firebase-auth'
 import firebase from 'firebase/app'
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class Login extends Component {
     render() {
@@ -17,9 +18,7 @@ class Login extends Component {
       return (
         <div>
             {
-              user
-                ? <p>Hello, {user.displayName}</p>
-                : <p>Please sign in.</p>
+              user && <Redirect to="/home" />
             }
   
             {
