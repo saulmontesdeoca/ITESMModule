@@ -1,19 +1,19 @@
 import React, { useState } from "react";
+import { useContext } from 'react';
 import { KeyboardDatePicker,   KeyboardTimePicker } from "@material-ui/pickers";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
+import { Redirect } from "react-router-dom";
+import { AuthContext } from "../Auth";
 
 import DateFnsUtils from '@date-io/date-fns';
 import Grid from '@material-ui/core/Grid';
 
-import 'firebase/firestore';
-import {firebaseApp} from '../../pages/Login'
+import {firebaseApp, db} from '../../pages/Login'
 
-const db = firebaseApp.firestore();
 const user = firebaseApp.auth().currentUser;
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +76,10 @@ const Dashboard = (props) => {
         });
     }
 
+    const { currentUser } = useContext(AuthContext);
+    if (!currentUser) {
+        return <Redirect to="/home" />;
+    }
     return (
             <div className="container-fluid">
                 <div className="d-sm-flex justify-content-between align-items-center mb-4">
