@@ -1,8 +1,10 @@
 import React from 'react';
+import { useContext } from 'react';
 import logo from '../../assets/img/avatars/avatar5.jpeg'
 import logoTec from '../../assets/img/logo.png';
 import firebase from 'firebase/app'
 import 'firebase/auth';
+import { AuthContext } from "../Auth";
 
 async function signOutUser () {
 firebase.auth().signOut().then(function() {
@@ -14,6 +16,8 @@ firebase.auth().signOut().then(function() {
 
 
 const Navbar = (props) => {
+    const { currentUser } = useContext(AuthContext);
+    console.log(currentUser);
     return (
             <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                 <div className="container">
@@ -24,8 +28,8 @@ const Navbar = (props) => {
                         <li className="nav-item dropdown no-arrow">
                             <div className="nav-item dropdown no-arrow pt-2">
                                 <a className="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="/">
-                                    <span className="d-none d-lg-inline mr-2 text-gray-600 small">Saul Mdo</span>
-                                    <img className="border rounded-circle img-profile" src={logo} alt="img"/>
+                                    <span className="d-none d-lg-inline mr-2 text-gray-600 small">{currentUser.displayName}</span>
+                                    <img className="border rounded-circle img-profile" src={currentUser.photoURL} alt="img"/>
                                 </a>
                                 <div
                                     className="dropdown-menu shadow dropdown-menu-right animated--grow-in">

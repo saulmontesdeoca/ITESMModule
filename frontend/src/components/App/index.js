@@ -4,11 +4,12 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
 import Reservaciones from "../../pages/Reservaciones";
-
+import { AuthProvider } from "../Auth";
 
 
 function App() {
   return (
+    <AuthProvider>
     <BrowserRouter>
         <Switch>
           <Route path='/' exact component={Login}/>
@@ -16,6 +17,7 @@ function App() {
           <Route path='/reservaciones' exact component={Reservaciones}/>
         </Switch>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
