@@ -8,9 +8,9 @@ import { AuthContext } from "../Auth";
 
 async function signOutUser () {
 firebase.auth().signOut().then(function() {
-    // Sign-out successful.
+    console.log("Sign-out successful.");
   }).catch(function(error) {
-    // An error happened.
+    console.log("An error happened.");
   });
 }
 

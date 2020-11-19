@@ -61,7 +61,7 @@ const Dashboard = () => {
                             <div className="card-body" style={{maxHeight: '355px', overflowY: 'auto'}}>
                                 <form>
                                     <div className="row">
-                                        <div class="form-group col">
+                                        <div className="form-group col">
                                             <label>Classroom:</label>
                                             <br/>
                                             <FormControl  className={classes.formControl}>
