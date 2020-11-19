@@ -1,6 +1,17 @@
 import React from 'react';
 import logo from '../../assets/img/avatars/avatar5.jpeg'
 import logoTec from '../../assets/img/logo.png';
+import firebase from 'firebase/app'
+import 'firebase/auth';
+
+async function signOutUser () {
+firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
+}
+
 
 const Navbar = (props) => {
     return (
@@ -21,7 +32,7 @@ const Navbar = (props) => {
                                         <a className="dropdown-item" href="/"><i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
                                         <a className="dropdown-item" href="/"><i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
                                         <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="/"><i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
+                                        <a className="dropdown-item" href="/" onClick={signOutUser}><i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
                                 </div>
                             </div>
                         </li>
