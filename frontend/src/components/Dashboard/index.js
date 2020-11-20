@@ -12,9 +12,7 @@ import { AuthContext } from "../Auth";
 import DateFnsUtils from '@date-io/date-fns';
 import Grid from '@material-ui/core/Grid';
 
-import {firebaseApp, db} from '../../pages/Login'
-
-const user = firebaseApp.auth().currentUser;
+import { db } from '../../pages/Login'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -30,6 +28,8 @@ const Dashboard = (props) => {
     const [finalHour, setFinalHour] = useState(new Date());
     const [classroom, setClassroom] = React.useState('');
     const classes = useStyles();
+    const { currentUser } = useContext(AuthContext);
+
 
 
     const handleClassroomChange = (event) => {
@@ -38,7 +38,6 @@ const Dashboard = (props) => {
     const handleUse = (event) => {
         setUse(event.target.value);
     };
-
     const handleDateChange = (date) => {
         setDate(date);
     };
@@ -50,21 +49,15 @@ const Dashboard = (props) => {
     };
 
     const  handleSubmit = async (event) => {
-        // console.log('====================================');
-        // console.log('Classroom: ' + classroom);
-        // console.log('Use: ' + use);
-        // console.log('Date: ' + date);
-        // console.log('Initial hour: ' + initialHour);
-        // console.log('Final hour: ' + finalHour);
-        // console.log('====================================');
         event.preventDefault();
 
         await db.collection('bookings').add({
+            userId: currentUser.uid,
             classrooms: classroom,
+            use: use,
             date: date,
             initialHour: initialHour,
             finalHour: finalHour,
-            userId: user.uid,
         })
         .then(docRef => {
             alert("Booked successfully!");
@@ -76,10 +69,10 @@ const Dashboard = (props) => {
         });
     }
 
-    const { currentUser } = useContext(AuthContext);
     if (!currentUser) {
         return <Redirect to="/home" />;
     }
+
     return (
             <div className="container-fluid">
                 <div className="d-sm-flex justify-content-between align-items-center mb-4">

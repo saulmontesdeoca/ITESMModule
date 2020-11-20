@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
 import withFirebaseAuth from 'react-with-firebase-auth'
 import firebase from 'firebase/app'
 import logoTec from '../../assets/img/logo.png';
@@ -8,7 +7,6 @@ import 'firebase/firestore';
 import firebaseConfig from '../../firebase';
 import { Carousel } from "react-bootstrap";
 
-// export const firebaseAppp = firebase.initializeApp(firebaseConfig);
 export const firebaseApp = firebaseConfig;
 const db = firebaseApp.firestore();
 

@@ -17,7 +17,7 @@ firebase.auth().signOut().then(function() {
 
 const Navbar = (props) => {
     const { currentUser } = useContext(AuthContext);
-    console.log(currentUser);
+    //console.log(currentUser);
     return (
             <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                 <div className="container">
