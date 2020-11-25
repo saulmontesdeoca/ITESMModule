@@ -2,8 +2,12 @@ import React from 'react';
 import { db } from '../../pages/Login';
 import Table from '../Table';
 
+
+
+
 class TablaReservaciones extends React.Component {
     constructor(props){
+        
         super(props)
 
         this.state = {
@@ -11,10 +15,13 @@ class TablaReservaciones extends React.Component {
         }
 
     }
+    
     async componentDidMount(){
-        db.collection("bookings").get()
+        // let reservation = await db.collection("bookings", ref => ref.where('userId', "==", this.props.currentUserId)).valueChanges();
+        db.collection("bookings").where('userId', "==", this.props.currentUserId).get()
         .then( querySnapshot => {
             const data = querySnapshot.docs.map(doc => doc.data());
+            console.log(data);
             this.setState({ reservations: data });
         })
         .catch( error => {

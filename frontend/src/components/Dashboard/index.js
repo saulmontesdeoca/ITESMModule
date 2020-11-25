@@ -31,7 +31,7 @@ const Dashboard = (props) => {
     const { currentUser } = useContext(AuthContext);
 
 
-
+    console.log(currentUser);
     const handleClassroomChange = (event) => {
         setClassroom(event.target.value);
     };

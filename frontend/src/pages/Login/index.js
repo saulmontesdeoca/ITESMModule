@@ -21,7 +21,7 @@ async function addUser (user) {
     profilePicture: user.photoURL,
   }
   db.collection("users-dev")
-    .doc(user.email)
+    .doc(user.uid)
     .set(data)
     .then(() => {
       console.log("A new user has been added", "Success");

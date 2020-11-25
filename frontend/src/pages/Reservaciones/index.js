@@ -3,10 +3,14 @@ import Layout from '../../components/Layout';
 
 import TablaReservaciones from '../../components/TablaReservaciones';
 
+import { useContext } from 'react';
+import { AuthContext } from "../../components/Auth";
+
 const Reservaciones = (props) => {
+    const { currentUser } = useContext(AuthContext);
     return (
         <Layout>
-            <TablaReservaciones />
+            <TablaReservaciones currentUserId={currentUser.uid} />
         </Layout>
     );
 };
